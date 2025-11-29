@@ -35,9 +35,11 @@
 		"@clack/prompts": "^0.11.0",
 		"@zyrohub/utilities": "^1.0.10",
 		"commander": "^14.0.2",
-		"execa": "^9.6.0"
+		"execa": "^9.6.0",
+		"fs-extra": "^11.3.2"
 	},
 	"devDependencies": {
+		"@types/fs-extra": "^11.0.4",
 		"@types/node": "^24.10.1",
 		"@zyrohub/config-prettier": "^1.0.6",
 		"tsc-alias": "^1.8.16",

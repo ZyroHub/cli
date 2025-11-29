@@ -1,11 +1,14 @@
-import { confirm, intro, select, text } from '@clack/prompts';
+import { confirm, intro, log, select, spinner, text } from '@clack/prompts';
 import { Ansi } from '@zyrohub/utilities';
 import { Command } from 'commander';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import { handlePrompt, promptParts } from '@/utils/commands.js';
 
 import { ProjectType } from '@/types/types.js';
 
+import { setupProject } from './setup.js';
 import { CreateProjectData } from './types.js';
 
 const getProjectPrefix = (projectType: ProjectType) => {
@@ -65,25 +68,46 @@ export const commandCreate = (program: Command) => {
 						message: '🗄️ Use ZyroHub Core Cluster?'
 					})
 				);
-			}
 
-			if (!projectName) {
-				const defaultProjectName = `${getProjectPrefix(projectData.type)}my-project`;
-				const name = await handlePrompt(
-					text({
-						message: '📁 Project name:',
-						placeholder: defaultProjectName,
-						defaultValue: defaultProjectName
-					}),
-					defaultProjectName
+				projectData.createDotEnv = await handlePrompt(
+					confirm({
+						message: '📄 Create .env file for environment variables? (also add dotenv in scripts)'
+					})
 				);
-
-				projectData.name = name;
 			}
+
+			if ((['module', 'other'] as ProjectType[]).includes(projectData.type)) {
+				projectData.addLibraryFields = await handlePrompt(
+					confirm({
+						message:
+							'📦 Add "exports", "publishConfig", and others library fields to package.json? (recommended for modules or libraries)'
+					})
+				);
+			}
+
+			const defaultProjectName = `${getProjectPrefix(projectData.type)}my-project`;
+			const name = await handlePrompt(
+				text({
+					message: '📁 Project name:',
+					placeholder: defaultProjectName,
+					initialValue: projectName,
+					defaultValue: defaultProjectName,
+					validate: value => {
+						const checkName = formatName(projectData.type!, value);
+
+						if (fs.existsSync(path.join(process.cwd(), checkName))) {
+							return 'Directory with this name already exists.';
+						}
+					}
+				}),
+				defaultProjectName
+			);
+
+			projectData.name = name;
 
 			projectData.name = formatName(projectData.type, projectData.name);
 
-			console.log(`${Ansi.green('✔')}  📁 Project name: ${Ansi.cyan(projectData.name)}`);
+			log.message(`📁 Project name: ${Ansi.cyan(projectData.name)}`, { symbol: Ansi.green('✔') });
 
 			projectData.description = await handlePrompt(
 				text({
@@ -92,10 +116,36 @@ export const commandCreate = (program: Command) => {
 				})
 			);
 
+			projectData.author = await handlePrompt(
+				text({
+					message: `👤 Author ${promptParts.optional}:`,
+					defaultValue: ' '
+				})
+			);
+
 			projectData.repository = await handlePrompt(
 				text({
 					message: `🔗 Repository URL ${promptParts.optional}:`,
-					defaultValue: ' '
+					defaultValue: ' ',
+					validate: value => {
+						if (value) {
+							try {
+								new URL(value);
+							} catch {
+								return 'Please enter a valid URL.';
+							}
+						}
+					}
+				})
+			);
+
+			if (projectData.repository) {
+				projectData.repositoryType = 'git';
+			}
+
+			projectData.initGit = await handlePrompt(
+				confirm({
+					message: '🔧 Initialize a Git repository? (git init)'
 				})
 			);
 
@@ -117,6 +167,22 @@ export const commandCreate = (program: Command) => {
 				})
 			);
 
-			console.log(projectData);
+			try {
+				await setupProject(projectData);
+			} catch (error) {
+				console.error(Ansi.red('✖  Failed to create the project:'), error);
+
+				const folderCreated = fs.existsSync(path.join(process.cwd(), projectData.name!));
+				if (folderCreated) {
+					const sCleanup = spinner();
+					sCleanup.start('Cleaning up created files');
+
+					await fs.promises
+						.rm(path.join(process.cwd(), projectData.name!), { recursive: true, force: true })
+						.then(() => {
+							sCleanup.stop(' Created files cleaned up successfully.');
+						});
+				}
+			}
 		});
 };
