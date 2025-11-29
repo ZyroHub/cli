@@ -1,43 +1,47 @@
 {
-  "name": "cli",
-  "version": "1.0.0",
-  "author": "DMVMarcio",
-  "type": "module",
-  "description": "A CLI Utility for the ZyroHub Ecosystem",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "bin": {
-    "zyrohub": "./dist/index.js"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "scripts": {
-    "dev": "tsx src/index.ts",
-    "build": "tsc && tsc-alias"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ZyroHub/cli.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": [
-    "/dist"
-  ],
-  "keywords": [],
-  "license": "MIT",
-  "devDependencies": {
-    "@types/node": "^24.10.1",
-    "tsc-alias": "^1.8.16",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "commander": "^14.0.2"
-  }
+	"name": "@zyrohub/cli",
+	"version": "1.0.0",
+	"author": "DMVMarcio",
+	"type": "module",
+	"description": "A CLI Utility for the ZyroHub Ecosystem",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"bin": {
+		"zyrohub": "./dist/index.js"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"dev": "tsx src/index.ts",
+		"build": "tsc && tsc-alias"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ZyroHub/cli.git"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"/dist"
+	],
+	"keywords": [],
+	"license": "MIT",
+	"dependencies": {
+		"@clack/prompts": "^0.11.0",
+		"@zyrohub/utilities": "^1.0.10",
+		"commander": "^14.0.2",
+		"execa": "^9.6.0"
+	},
+	"devDependencies": {
+		"@types/node": "^24.10.1",
+		"@zyrohub/config-prettier": "^1.0.6",
+		"tsc-alias": "^1.8.16",
+		"tsx": "^4.20.6",
+		"typescript": "^5.9.3"
+	}
 }
