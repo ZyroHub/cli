@@ -1,0 +1,34 @@
+import { CreateProjectData } from '../types.js';
+
+export const getTSConfigJson = (projectData: CreateProjectData) => {
+	const tsconfigData = {
+		compilerOptions: {
+			target: 'ESNext',
+			module: 'NodeNext',
+			moduleResolution: 'nodenext',
+			esModuleInterop: true,
+			forceConsistentCasingInFileNames: true,
+			outDir: './dist',
+			rootDir: './src',
+			declaration: true,
+			strict: true,
+			skipLibCheck: true,
+			baseUrl: '.',
+			experimentalDecorators: true,
+			emitDecoratorMetadata: true,
+			paths: {
+				'@/*': ['src/*']
+			}
+		},
+		'tsc-alias': {
+			resolveFullPaths: true,
+			resolveFullExtension: '.js',
+			fileExtensions: {
+				inputGlob: '{js,mjs,d.ts}',
+				outputCheck: ['js', 'json', 'mjs', 'd.ts']
+			}
+		}
+	};
+
+	return JSON.stringify(tsconfigData, null, 4);
+};

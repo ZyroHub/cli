@@ -169,6 +169,14 @@ export const commandCreate = (program: Command) => {
 
 			try {
 				await setupProject(projectData);
+
+				console.log('');
+				console.log(Ansi.green('✔  Project created successfully!'));
+				console.log('');
+				console.log(Ansi.magenta('➡  Next steps:'));
+				console.log('');
+				console.log(`\t- ${Ansi.cyan('cd')} ${projectData.name}`);
+				console.log(`\t- ${Ansi.cyan('Start coding your project! ☕')}`);
 			} catch (error) {
 				console.error(Ansi.red('✖  Failed to create the project:'), error);
 
