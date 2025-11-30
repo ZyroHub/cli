@@ -10,9 +10,19 @@
 
 - [ZyroHub - CLI](#zyrohub---cli)
 - [Table of Contents](#table-of-contents)
+- [Usage Without Installation](#usage-without-installation)
 - [Getting Started](#getting-started)
 - [Commands](#commands)
     - [Create Project](#create-project)
+
+## Usage Without Installation
+
+You can use the CLI without installing it globally.
+
+```bash
+# npm
+npx @zyrohub/cli create
+```
 
 ## Getting Started
 
