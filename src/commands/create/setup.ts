@@ -152,7 +152,7 @@ export const setupProject = async (projectData: CreateProjectData) => {
 		const sPrettier = spinner();
 		sPrettier.start('Creating Prettier configuration file');
 
-		const prettierrcPath = path.join(targetPath, 'prettierrc.ts');
+		const prettierrcPath = path.join(targetPath, '.prettierrc.js');
 		const prettierrcContent = getPrettierrcContent();
 
 		let prettierrcCreated = false;

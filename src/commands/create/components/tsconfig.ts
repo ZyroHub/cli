@@ -20,6 +20,8 @@ export const getTSConfigJson = (projectData: CreateProjectData) => {
 				'@/*': ['src/*']
 			}
 		},
+		include: ['src'],
+		exclude: ['node_modules', 'dist'],
 		'tsc-alias': {
 			resolveFullPaths: true,
 			resolveFullExtension: '.js',
