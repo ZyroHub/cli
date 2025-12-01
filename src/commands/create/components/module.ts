@@ -8,7 +8,7 @@ export const getModuleContent = (projectData: CreateProjectData) => {
 	return [
 		"import { Core, BaseModule } from '@zyrohub/core';",
 		'',
-		`interface ${projectNamePascal}ModuleOptions {};`,
+		`export interface ${projectNamePascal}ModuleOptions {};`,
 		'',
 		`export class ${projectNamePascal}Module extends BaseModule {`,
 		`\tstatic options: ${projectNamePascal}ModuleOptions;`,
