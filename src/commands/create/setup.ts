@@ -68,6 +68,7 @@ export const setupProject = async (projectData: CreateProjectData) => {
 	sTSConfig.stop('✅ tsconfig.json created successfully.');
 
 	const installPackageList = [
+		...(projectData.type === 'app' ? ['@zyrohub/core'] : []),
 		...(projectData.createDotEnv && projectData.type === 'app' ? ['@dotenvx/dotenvx'] : [])
 	];
 
@@ -108,6 +109,11 @@ export const setupProject = async (projectData: CreateProjectData) => {
 	}).then(() => {
 		devInstallSuccess = true;
 	});
+
+	if (!devInstallSuccess) {
+		sInstall.stop();
+		throw new Error('Failed to install devDependencies.');
+	}
 
 	sInstall.stop('✅ Dependencies installed successfully.');
 
