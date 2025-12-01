@@ -23,5 +23,7 @@ export const getMainContent = (projectData: CreateProjectData) => {
 		mountedScript += "export * from './Module.js';";
 	}
 
+	mountedScript += '\n';
+
 	return mountedScript;
 };

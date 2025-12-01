@@ -51,7 +51,7 @@ export const getPackageJson = (projectData: CreateProjectData) => {
 		devDependencies: {}
 	};
 
-	return JSON.stringify(packageJsonData, null, 4);
+	return JSON.stringify(packageJsonData, null, 4) + '\n';
 };
 
 export const getInstallPackageCommand = (packageManager: string, packages: string[], isDev: boolean = false) => {

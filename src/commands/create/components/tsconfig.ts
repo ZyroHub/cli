@@ -32,5 +32,5 @@ export const getTSConfigJson = (projectData: CreateProjectData) => {
 		}
 	};
 
-	return JSON.stringify(tsconfigData, null, 4);
+	return JSON.stringify(tsconfigData, null, 4) + '\n';
 };
