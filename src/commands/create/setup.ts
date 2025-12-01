@@ -105,7 +105,8 @@ export const setupProject = async (projectData: CreateProjectData) => {
 		sInstall.message(`Installing dependencies: ${installPackageList.join(', ')}`);
 		let installSuccess = false;
 		await execa(installCommand, {
-			cwd: targetPath
+			cwd: targetPath,
+			shell: true
 		}).then(() => {
 			installSuccess = true;
 		});
@@ -129,7 +130,8 @@ export const setupProject = async (projectData: CreateProjectData) => {
 
 	sInstall.message(`Installing devDependencies: ${devInstallPackageList.join(', ')}`);
 	await execa(devInstallCommand, {
-		cwd: targetPath
+		cwd: targetPath,
+		shell: true
 	}).then(() => {
 		devInstallSuccess = true;
 	});

@@ -1,6 +1,6 @@
 {
 	"name": "@zyrohub/cli",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"author": "DMVMarcio",
 	"type": "module",
 	"description": "A CLI Utility for the ZyroHub Ecosystem",
