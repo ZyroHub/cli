@@ -1,5 +1,4 @@
 import { spinner } from '@clack/prompts';
-import { Ansi } from '@zyrohub/utilities';
 import { execa } from 'execa';
 import fs from 'fs-extra';
 import path from 'node:path';
@@ -71,6 +70,31 @@ export const setupProject = async (projectData: CreateProjectData) => {
 		...(projectData.type === 'app' ? ['@zyrohub/core'] : []),
 		...(projectData.createDotEnv && projectData.type === 'app' ? ['@dotenvx/dotenvx'] : [])
 	];
+
+	if (projectData.createDotEnv) {
+		const sEnv = spinner();
+
+		const envFiles = ['.env', '.env.example', '.env.development'];
+
+		sEnv.start('Creating .env files');
+
+		for (const fileName of envFiles) {
+			const envFilePath = path.join(targetPath, fileName);
+
+			let envFileCreated = false;
+
+			await fs.writeFile(envFilePath, '').then(() => {
+				envFileCreated = true;
+			});
+
+			if (!envFileCreated) {
+				sEnv.stop();
+				throw new Error(`Failed to create ${fileName} file.`);
+			}
+		}
+
+		sEnv.stop('✅ .env files created successfully.');
+	}
 
 	const sInstall = spinner();
 	sInstall.start(`Installing dependencies with ${projectData.packageManager}`);
