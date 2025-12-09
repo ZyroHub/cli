@@ -8,6 +8,7 @@ import { getMainContent } from './components/main.js';
 import { getModuleContent } from './components/module.js';
 import { getInstallPackageCommand, getPackageJson } from './components/package.js';
 import { getPrettierrcContent } from './components/prettier.js';
+import { getPrettierrcIgnoreContent } from './components/prettierignore.js';
 import { getTSConfigJson } from './components/tsconfig.js';
 import { CreateProjectData } from './types.js';
 
@@ -197,7 +198,21 @@ export const setupProject = async (projectData: CreateProjectData) => {
 			throw new Error('Failed to create Prettier configuration file.');
 		}
 
-		sPrettier.stop('✅ Prettier configuration file created successfully.');
+		sPrettier.message('Creating .prettierignore file');
+		const prettierignorePath = path.join(targetPath, '.prettierignore');
+		const prettierignoreContent = getPrettierrcIgnoreContent();
+
+		let prettierignoreCreated = false;
+		await fs.writeFile(prettierignorePath, prettierignoreContent).then(() => {
+			prettierignoreCreated = true;
+		});
+
+		if (!prettierignoreCreated) {
+			sPrettier.stop();
+			throw new Error('Failed to create .prettierignore file.');
+		}
+
+		sPrettier.stop('✅ Prettier configuration files created successfully.');
 	}
 
 	const sSrc = spinner();
