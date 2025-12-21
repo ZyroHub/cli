@@ -177,7 +177,7 @@ export const setupProject = async (projectData: CreateProjectData) => {
 			sGit.message('Adding remote repository');
 
 			let gitRemoteSuccess = false;
-			await execa(`git remote add origin ${projectData.repository}.git`, {
+			await execa('git', ['remote', 'add', 'origin', `${projectData.repository}.git`], {
 				cwd: targetPath
 			}).then(() => {
 				gitRemoteSuccess = true;
@@ -195,7 +195,7 @@ export const setupProject = async (projectData: CreateProjectData) => {
 			sGit.message('Creating initial commit');
 
 			let gitAddSuccess = false;
-			await execa('git add .', {
+			await execa('git', ['add', '.'], {
 				cwd: targetPath
 			}).then(() => {
 				gitAddSuccess = true;
@@ -209,7 +209,7 @@ export const setupProject = async (projectData: CreateProjectData) => {
 			gitAddSuccess = false;
 
 			let gitCommitSuccess = false;
-			await execa(`git commit -m "${commitMessage}"`, {
+			await execa('git', ['commit', '-m', commitMessage], {
 				cwd: targetPath
 			}).then(() => {
 				gitCommitSuccess = true;

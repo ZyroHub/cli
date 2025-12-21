@@ -153,11 +153,13 @@ export const commandCreate = (program: Command) => {
 				})
 			);
 
-			projectData.createInitialCommit = await handlePrompt(
-				confirm({
-					message: '🔖 Commit initial project files after creation?'
-				})
-			);
+			if (projectData.initGit) {
+				projectData.createInitialCommit = await handlePrompt(
+					confirm({
+						message: '🔖 Commit initial project files after creation?'
+					})
+				);
+			}
 
 			projectData.packageManager = await handlePrompt(
 				select({
