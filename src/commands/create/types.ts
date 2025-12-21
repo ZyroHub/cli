@@ -1,5 +1,7 @@
 import { PackageManager, ProjectType } from '@/types/types.js';
 
+export type RepositoryType = 'git';
+
 export interface CreateProjectData {
 	type?: ProjectType;
 	useCluster?: boolean;
@@ -12,7 +14,9 @@ export interface CreateProjectData {
 	author?: string;
 
 	repository?: string;
-	repositoryType?: string;
+	repositoryType?: RepositoryType;
+
+	createInitialCommit?: boolean;
 
 	initGit?: boolean;
 
