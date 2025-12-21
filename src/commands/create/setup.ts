@@ -160,6 +160,19 @@ export const setupProject = async (projectData: CreateProjectData) => {
 			throw new Error('Failed to initialize Git repository.');
 		}
 
+		sGit.message('Setting Git branch to main');
+		let gitBranchSuccess = false;
+		await execa('git branch -M main', {
+			cwd: targetPath
+		}).then(() => {
+			gitBranchSuccess = true;
+		});
+
+		if (!gitBranchSuccess) {
+			sGit.stop();
+			throw new Error('Failed to set Git branch to main.');
+		}
+
 		sGit.stop('✅ Git repository initialized successfully.');
 	}
 

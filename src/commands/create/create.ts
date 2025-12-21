@@ -141,6 +141,10 @@ export const commandCreate = (program: Command) => {
 
 			if (projectData.repository) {
 				projectData.repositoryType = 'git';
+
+				if (projectData.repository.endsWith('.git')) {
+					projectData.repository = projectData.repository.slice(0, -4);
+				}
 			}
 
 			projectData.initGit = await handlePrompt(

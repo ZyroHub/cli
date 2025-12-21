@@ -33,7 +33,7 @@ export const getPackageJson = (projectData: CreateProjectData) => {
 		...(projectData.repository && {
 			repository: {
 				type: 'git',
-				url: projectData.repository
+				url: `${projectData.repository}.git`
 			}
 		}),
 
