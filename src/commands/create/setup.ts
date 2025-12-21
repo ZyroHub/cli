@@ -144,86 +144,6 @@ export const setupProject = async (projectData: CreateProjectData) => {
 
 	sInstall.stop('✅ Dependencies installed successfully.');
 
-	if (projectData.initGit) {
-		const sGit = spinner();
-		sGit.start('Initializing Git repository');
-
-		let gitSuccess = false;
-		await execa('git init', {
-			cwd: targetPath
-		}).then(() => {
-			gitSuccess = true;
-		});
-
-		if (!gitSuccess) {
-			sGit.stop();
-			throw new Error('Failed to initialize Git repository.');
-		}
-
-		sGit.message('Setting Git branch to main');
-		let gitBranchSuccess = false;
-		await execa('git branch -M main', {
-			cwd: targetPath
-		}).then(() => {
-			gitBranchSuccess = true;
-		});
-
-		if (!gitBranchSuccess) {
-			sGit.stop();
-			throw new Error('Failed to set Git branch to main.');
-		}
-
-		if (projectData.repository && projectData.repositoryType === 'git') {
-			sGit.message('Adding remote repository');
-
-			let gitRemoteSuccess = false;
-			await execa('git', ['remote', 'add', 'origin', `${projectData.repository}.git`], {
-				cwd: targetPath
-			}).then(() => {
-				gitRemoteSuccess = true;
-			});
-
-			if (!gitRemoteSuccess) {
-				sGit.stop();
-				throw new Error('Failed to add remote repository.');
-			}
-		}
-
-		if (projectData.createInitialCommit) {
-			const commitMessage = 'feat: add initial project files';
-
-			sGit.message('Creating initial commit');
-
-			let gitAddSuccess = false;
-			await execa('git', ['add', '.'], {
-				cwd: targetPath
-			}).then(() => {
-				gitAddSuccess = true;
-			});
-
-			if (!gitAddSuccess) {
-				sGit.stop();
-				throw new Error('Failed to add files to Git.');
-			}
-
-			gitAddSuccess = false;
-
-			let gitCommitSuccess = false;
-			await execa('git', ['commit', '-m', commitMessage], {
-				cwd: targetPath
-			}).then(() => {
-				gitCommitSuccess = true;
-			});
-
-			if (!gitCommitSuccess) {
-				sGit.stop();
-				throw new Error('Failed to create initial commit.');
-			}
-		}
-
-		sGit.stop('✅ Git repository initialized successfully.');
-	}
-
 	const sGitIgnore = spinner();
 	sGitIgnore.start('Creating .gitignore file');
 
@@ -314,6 +234,86 @@ export const setupProject = async (projectData: CreateProjectData) => {
 	}
 
 	sSrc.stop('✅ Files structure created successfully.');
+
+	if (projectData.initGit) {
+		const sGit = spinner();
+		sGit.start('Initializing Git repository');
+
+		let gitSuccess = false;
+		await execa('git init', {
+			cwd: targetPath
+		}).then(() => {
+			gitSuccess = true;
+		});
+
+		if (!gitSuccess) {
+			sGit.stop();
+			throw new Error('Failed to initialize Git repository.');
+		}
+
+		sGit.message('Setting Git branch to main');
+		let gitBranchSuccess = false;
+		await execa('git branch -M main', {
+			cwd: targetPath
+		}).then(() => {
+			gitBranchSuccess = true;
+		});
+
+		if (!gitBranchSuccess) {
+			sGit.stop();
+			throw new Error('Failed to set Git branch to main.');
+		}
+
+		if (projectData.repository && projectData.repositoryType === 'git') {
+			sGit.message('Adding remote repository');
+
+			let gitRemoteSuccess = false;
+			await execa('git', ['remote', 'add', 'origin', `${projectData.repository}.git`], {
+				cwd: targetPath
+			}).then(() => {
+				gitRemoteSuccess = true;
+			});
+
+			if (!gitRemoteSuccess) {
+				sGit.stop();
+				throw new Error('Failed to add remote repository.');
+			}
+		}
+
+		if (projectData.createInitialCommit) {
+			const commitMessage = 'feat: add initial project files';
+
+			sGit.message('Creating initial commit');
+
+			let gitAddSuccess = false;
+			await execa('git', ['add', '.'], {
+				cwd: targetPath
+			}).then(() => {
+				gitAddSuccess = true;
+			});
+
+			if (!gitAddSuccess) {
+				sGit.stop();
+				throw new Error('Failed to add files to Git.');
+			}
+
+			gitAddSuccess = false;
+
+			let gitCommitSuccess = false;
+			await execa('git', ['commit', '-m', commitMessage], {
+				cwd: targetPath
+			}).then(() => {
+				gitCommitSuccess = true;
+			});
+
+			if (!gitCommitSuccess) {
+				sGit.stop();
+				throw new Error('Failed to create initial commit.');
+			}
+		}
+
+		sGit.stop('✅ Git repository initialized successfully.');
+	}
 
 	return;
 };
