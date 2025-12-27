@@ -1,5 +1,9 @@
 import { CreateProjectData } from '../types.js';
 
+
+
+
+
 export const getTSConfigJson = (projectData: CreateProjectData) => {
 	const tsconfigData = {
 		compilerOptions: {
@@ -22,6 +26,10 @@ export const getTSConfigJson = (projectData: CreateProjectData) => {
 		},
 		include: ['src'],
 		exclude: ['node_modules', 'dist'],
+		'ts-node': {
+			esm: true,
+			swc: true
+		},
 		'tsc-alias': {
 			resolveFullPaths: true,
 			resolveFullExtension: '.js',
