@@ -1,9 +1,5 @@
 import { CreateProjectData } from '../types.js';
 
-
-
-
-
 export const getTSConfigJson = (projectData: CreateProjectData) => {
 	const tsconfigData = {
 		compilerOptions: {
