@@ -27,7 +27,7 @@ export const getPackageJson = (projectData: CreateProjectData) => {
 		scripts: {
 			start: `${dotenvxPrefix()}node ./dist/index.js`,
 			dev: `${dotenvxPrefix('.env.development')}node --watch --no-warnings --loader ts-node/esm src/index.ts`,
-			build: 'tsc && tsc-alias'
+			build: 'rimraf dist && tsc && tsc-alias'
 		},
 
 		...(projectData.repository && {

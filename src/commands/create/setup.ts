@@ -104,6 +104,7 @@ export const setupProject = async (projectData: CreateProjectData) => {
 		'ts-node',
 		'@swc/core',
 		'@swc/helpers',
+		'rimraf',
 		...(projectData.usePrettier ? ['@zyrohub/config-prettier'] : [])
 	];
 

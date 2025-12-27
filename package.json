@@ -1,6 +1,6 @@
 {
 	"name": "@zyrohub/cli",
-	"version": "1.0.9",
+	"version": "1.0.10",
 	"author": "DMVMarcio",
 	"type": "module",
 	"description": "A CLI Utility for the ZyroHub Ecosystem",
@@ -16,8 +16,8 @@
 		}
 	},
 	"scripts": {
-		"dev": "tsx src/index.ts",
-		"build": "tsc && tsc-alias && tsx scripts/assets.ts"
+		"dev": "node --watch --no-warnings --loader ts-node/esm src/index.ts",
+		"build": "rimraf dist && tsc && tsc-alias && tsx scripts/assets.ts"
 	},
 	"repository": {
 		"type": "git",
@@ -42,6 +42,7 @@
 		"@types/fs-extra": "^11.0.4",
 		"@types/node": "^24.10.1",
 		"@zyrohub/config-prettier": "^1.0.6",
+		"rimraf": "^6.1.2",
 		"tsc-alias": "^1.8.16",
 		"tsx": "^4.20.6",
 		"typescript": "^5.9.3"
