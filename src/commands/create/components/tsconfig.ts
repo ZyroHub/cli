@@ -13,6 +13,7 @@ export const getTSConfigJson = (projectData: CreateProjectData) => {
 			declaration: true,
 			strict: true,
 			skipLibCheck: true,
+			resolveJsonModule: true,
 			baseUrl: '.',
 			experimentalDecorators: true,
 			emitDecoratorMetadata: true,
@@ -22,10 +23,6 @@ export const getTSConfigJson = (projectData: CreateProjectData) => {
 		},
 		include: ['src'],
 		exclude: ['node_modules', 'dist'],
-		'ts-node': {
-			esm: true,
-			swc: true
-		},
 		'tsc-alias': {
 			resolveFullPaths: true,
 			resolveFullExtension: '.js',

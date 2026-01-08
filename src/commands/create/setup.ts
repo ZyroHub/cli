@@ -101,10 +101,8 @@ export const setupProject = async (projectData: CreateProjectData) => {
 	const devInstallPackageList = [
 		'typescript',
 		'tsc-alias',
-		'ts-node',
-		'@swc/core',
-		'@swc/helpers',
 		'rimraf',
+		'@zyrohub/ts-runner',
 		...(projectData.usePrettier ? ['@zyrohub/config-prettier'] : [])
 	];
 

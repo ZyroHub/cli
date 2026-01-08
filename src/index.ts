@@ -1,14 +1,8 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import fs from 'fs-extra';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
 
+import packageJson from '../package.json' with { type: 'json' };
 import { commands } from './commands/commands.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const packageJson = fs.readJsonSync(join(__dirname, 'package.json'));
 
 const program = new Command();
 
