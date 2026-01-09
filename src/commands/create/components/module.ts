@@ -18,7 +18,7 @@ export const getModuleContent = (projectData: CreateProjectData) => {
 			`\t\tsuper();`,
 			'\t}',
 			'',
-			`\tasync init(core: Core, options: ${projectNamePascal}ModuleOptions) {`,
+			`\tasync init(data: { core: Core, options: ${projectNamePascal}ModuleOptions }) {`,
 			'',
 			'\t}',
 			'}'
