@@ -22,7 +22,9 @@ export const getModuleContent = (projectData: CreateProjectData) => {
 			`\tasync init(data: { core: Core, options: ${projectNamePascal}ModuleOptions }) {`,
 			'',
 			'\t}',
-			'}'
+			'}',
+			'',
+			`export default { ${projectNamePascal}Module };`
 		].join('\n') + '\n'
 	);
 };

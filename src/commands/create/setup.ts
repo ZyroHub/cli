@@ -103,7 +103,7 @@ export const setupProject = async (projectData: CreateProjectData) => {
 		'tsc-alias',
 		'rimraf',
 		'@zyrohub/ts-runner',
-		"@types/node",
+		'@types/node',
 		...(projectData.usePrettier ? ['@zyrohub/config-prettier'] : [])
 	];
 
