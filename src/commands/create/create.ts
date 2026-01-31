@@ -11,25 +11,8 @@ import { ProjectType } from '@/types/types.js';
 import { setupProject } from './setup.js';
 import { CreateProjectData } from './types.js';
 
-const getProjectPrefix = (projectType: ProjectType) => {
-	switch (projectType) {
-		case 'module':
-			return 'module-';
-		case 'app':
-			return 'app-';
-		default:
-			return '';
-	}
-};
-
-const formatName = (projectType: ProjectType, rawName?: string) => {
+const formatName = (rawName?: string) => {
 	let formatted = (rawName || '').trim().replace(/\s+/g, '-').toLowerCase();
-
-	const projectPrefix = getProjectPrefix(projectType);
-
-	if (!formatted.startsWith(projectPrefix)) {
-		formatted = `${projectPrefix}${formatted}`;
-	}
 
 	return formatted;
 };
@@ -85,7 +68,7 @@ export const commandCreate = (program: Command) => {
 				);
 			}
 
-			const defaultProjectName = `${getProjectPrefix(projectData.type)}my-project`;
+			const defaultProjectName = `my-project`;
 			const name = await handlePrompt(
 				text({
 					message: '📁 Project name:',
@@ -93,7 +76,7 @@ export const commandCreate = (program: Command) => {
 					initialValue: projectName,
 					defaultValue: defaultProjectName,
 					validate: value => {
-						const checkName = formatName(projectData.type!, value);
+						const checkName = formatName(value);
 
 						if (fs.existsSync(path.join(process.cwd(), checkName))) {
 							return 'Directory with this name already exists.';
@@ -105,7 +88,7 @@ export const commandCreate = (program: Command) => {
 
 			projectData.name = name;
 
-			projectData.name = formatName(projectData.type, projectData.name);
+			projectData.name = formatName(projectData.name);
 
 			log.message(`📁 Project name: ${Ansi.cyan(projectData.name)}`, { symbol: Ansi.green('✔') });
 
